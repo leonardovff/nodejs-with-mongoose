@@ -14,10 +14,13 @@ const app = createExpressServer({
 })
 
 // Connect to In-Memory DB
-;async () => await db({ test: false })
+const bootStartApplication = async () => {
+    await db({ test: false })
+    app.listen(port, () => {
+        console.log(`[Live Coding Challenge] Running at http://localhost:${port}`)
+    })
+}
+bootStartApplication().then();
 
-app.listen(port, () => {
-    console.log(`[Live Coding Challenge] Running at http://localhost:${port}`)
-})
 
 export default app
