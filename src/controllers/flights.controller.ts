@@ -1,4 +1,4 @@
-import { JsonController, Get, Post, Body } from 'routing-controllers';
+import { JsonController, Get, Post, Body, Param, Patch } from 'routing-controllers';
 import { FlightsService } from '../services/flights.service';
 import { PersonsService } from '../services/persons.service';
 
@@ -14,19 +14,15 @@ export default class FlightsController {
             data: await flightsService.getAll(),
         }
     }
-    @Post('', { transformResponse: false })
-    async createFlightAndAssociatePersons(@Body() body: any) {
-        const {code, origin, destination, peopleEmail} = body;
-        const flight = {
+    @Patch('/:code/booking', { transformResponse: false })
+    async bookingFlightToOnePerson(
+        @Param('code') code: string,
+        @Body() body: ({ peopleEmail: string[]}),
+    ) {
+        const people = await personsService.getAllByEmail(body.peopleEmail);
+        return await flightsService.associatePeopleToFlight(
             code, 
-            origin, 
-            destination
-        };
-        const people = await personsService.getAllByEmail(peopleEmail);
-        await flightsService.createFlightAndAssociatePersons(flight, people);
-        return {
-            status: 200,
-            data: await flightsService.getAll(),
-        }
+            people
+        );
     }
 }

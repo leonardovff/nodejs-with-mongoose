@@ -1,10 +1,12 @@
 import mongoose, { Schema } from 'mongoose'
+import { Person } from './persons.model'
 
 export interface Flight {
-    code: string
-    origin: string
-    destination: string
-    status?: string
+    code: string;
+    origin: string;
+    destination: string;
+    status: string;
+    passengers: Person[];
 }
 
 const schema = new Schema<Flight>(
@@ -13,6 +15,7 @@ const schema = new Schema<Flight>(
         origin: { required: true, type: String },
         destination: { required: true, type: String },
         status: String,
+        passengers: [{type: mongoose.Types.ObjectId, ref: "Persons" }],
     },
     { timestamps: true }
 )
