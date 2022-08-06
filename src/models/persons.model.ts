@@ -10,7 +10,7 @@ export interface Person {
 const schema = new Schema<Person>(
     {
         name: { required: true, type: String },
-        email: { required: true, type: String },
+        email: { required: true, type: String, unique: true },
         gender: {
             required: true,
             type: String,

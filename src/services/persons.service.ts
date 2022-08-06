@@ -8,7 +8,11 @@ export class PersonsService {
         return await PersonsModel.find({email: {$in: emails}}).exec();
     }
 
-    async create(person: any) {
+    async create(person: Person) {
         await PersonsModel.create(person)
+    }
+
+    async deleteByEmail(email: string) {
+        await PersonsModel.deleteOne({ email })
     }
 }
