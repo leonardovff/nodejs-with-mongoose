@@ -8,9 +8,9 @@ export const db = async ({ test = false }) => {
         const uri = mongo.getUri()
 
         const mongooseOpts = {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useCreateIndex: true,
+            // useUnifiedTopology: true,
             useFindAndModify: false,
         }
 
